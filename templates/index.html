@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+        <script src="/static/script.js"></script>
+        <style>
+            .flashes {
+                list-style-type: none;
+                padding: 0;
+                animation: disappear 4s forwards;
+            }
+            @keyframes disappear {
+                0% { opacity: 1; }
+                100% { opacity: 0; display: none;}
+            }
+            .flashes li {
+                margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            .error {
+                background-color: #f8d7da;
+                color: #721c24;
+            }
+            .success {
+                background-color: #d4edda;
+                color: #155724;
+            }
+            .info {
+                background-color: #cce5ff;
+                color: #004085;
+            }
+            .danger {
+                background-color: #f8d7da;
+                color: #721c24;
+            }
+            .warning {
+                background-color: #fff3cd;
+                color: #856404;
+            }
+        </style>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{category}}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

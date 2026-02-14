@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-Time Translator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+  </head>
+</head>
+<body>
+<form class="container mt-5" method="POST" action="/call">
+  <h1 class="h1">Real-TimeTranslator</h1>
+  <input id="username" name="user" placeholder="Your name"/>
+  <input id="room" name="room" placeholder="Room name"/>
+  <br><br>
+  <select id="lang" class="form-select" name='lang'>
+    <option value="">---Select Your Language----</option>
+    <option value="en">English</option>
+    <option value="mr">Marathi</option>
+    <option value="ny">Chichewa</option>
+    <option value="hi">Hindi</option>
+  </select>
+  <br><br>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Join Room</button>
+    <button class="btn btn-primary">Create Room</button>
+  </div>
+</form>
+</body>
+<script src="/static/script.js"></script>
+</html>

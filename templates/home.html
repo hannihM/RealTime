@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<form class="container mt-5" method="POST">
+  <h1 class="h1">Chats</h1>
+  <label for="user">Username:</label>
+  <input id="user" name="user" placeholder="Your name" value="{{user}}" class="form-control"/>
+  <br>
+  <label for="room">Room Name:</label>
+  <input id="room" name="room" placeholder="Room name" value="{{room}}" class="form-control"/>
+  <br>
+  <select id="lang" class="form-select" name='lang'>
+    <option value="{{lang}}">{% if not lang %}---Select Your Language----{% else %} {{lang}} {% endif %}</option>
+    <option value="en">English</option>
+    <option value="mr">Marathi</option>
+    <option value="ny">Chichewa</option>
+    <option value="hi">Hindi</option>
+  </select>
+  <br>
+  <div>
+    <button type="submit" class="btn btn-primary" name="join">Join a Room</button>
+    <button type="submit" class="btn btn-primary" name="create">Create a Room</button>
+  </div>
+</form>
+{% endblock %}

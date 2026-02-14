@@ -1,0 +1,92 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="h2">Welcome to {{room}}</h1>
+    <br>
+    <input id="text" type="text" name="message" placeholder="Type your message here..." class="form-control"/>
+    <br>
+    <button class="btn btn-primary" type="button" name="send" id="send-btn" onclick="sendmessage()">Send Message</button>
+    <button class="btn btn-primary" onclick="recordmessage()">Sart Talking</button><br>
+    <div id="message"></div>
+</div>
+
+<script type="text/javascript">
+var socketio = io();
+
+const messageDiv = document.getElementById("message");
+
+// socket.io("translated", (data) =>{
+//     createMessage(data.user, data.message);
+// });
+
+function createMessage(user, message){
+    console.log("apa tidafika")
+    const content = `
+    <div class="card mb-2">
+        <span>
+            <strong>${user}:</strong> ${message}
+        </span>
+        <span>
+            ${new Date().toLocaleTimeString()}
+        </span>
+    </div>`
+
+    messageDiv.innerHTML += content;
+};
+
+socketio.on("messageSent", (data) =>{
+    console.log(data.message)
+    createMessage(data.user, data.message);
+});
+
+function sendmessage(){
+    const text = document.getElementById("text");
+    console.log(text.value)
+    if (text.value == "") return;
+    socketio.emit("message", {data: text.value});
+    console.log("here")
+    text.value = "";
+}
+
+function recordmessage() {
+    console.log("recording....");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+
+    if (!window.SpeechRecognition) {
+        console.error("Speech Recognition not supported in this browser.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.interimResults = false;
+    recognition.continuous = false;
+    console.log(recognition.lang)
+
+    recognition.onstart = function () {
+        console.log("Voice recognition started.");
+    };
+
+    recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        console.log("You said:", transcript);
+        socketio.emit("message", {data: transcript});
+    };
+
+    recognition.onerror = function (event) {
+        console.error("Speech recognition error:", event.error);
+    };
+
+    recognition.onend = function () {
+        console.log("Voice recognition ended.");
+    };
+
+    recognition.start();
+}
+
+</script>
+{% endblock %}
+
