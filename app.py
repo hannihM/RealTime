@@ -136,6 +136,7 @@ def handle_message(data):
     
     sourceLangName = LANG_CODES[source_lang]
     langName = LANG_CODES[lang]
+    print(f"source lang: {sourceLangName}, target lang: {langName}")
 
     for sid, lang in user_sessions.items():
         print(f"for user: {sid}, session language is: {lang}")
@@ -143,7 +144,7 @@ def handle_message(data):
             translated = GoogleTranslator(source=source_lang, target=lang).translate(text)
             print(f"{sid} google translated text: {translated}")
         except:
-            translated = MyMemoryTranslator(source=source_lang, target=lang).translate(text)
+            translated = MyMemoryTranslator(source=sourceLangName, target=langName).translate(text)
             print(f"{sid} memory translated text: {translated}")
         content = {"user": user, "message": translated}
         emit("messageSent", content, to=sid)
